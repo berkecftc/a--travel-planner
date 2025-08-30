@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+	<h1>AI Seyahat Planlayıcı</h1>
+	<p>Gemini destekli seyahat planı, harita üzerinde destinasyonlar ve şehir hava durumu</p>
+</div>
 
-## Getting Started
+## ✨ Özellikler
+- AI plan üretimi (Google Gemini 1.5 Flash) – gün gün öneriler ve en sonda Mekanlar JSON’u
+- Harita (Leaflet + React‑Leaflet) – şehir odaklı akıllı jeokodlama ve işaretleme
+- Hava durumu (Open‑Meteo) – anlık durum + seçilen tarihten itibaren özet, ikonlu kart
+- Dark mode, modern UI (Tailwind CSS v4), shadcn‑style bileşenler
 
-First, run the development server:
+## 🚀 Kurulum
+Önkoşullar: Node 18+ (veya 20+), npm.
 
+1) Bağımlılıkları yükleyin:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2) Ortam değişkenleri:
+```bash
+cp .env.local.example .env.local
+# .env.local dosyasını açın ve aşağıdaki anahtarı doldurun
+# GEMINI_API_KEY=<Google AI Studio API Key>
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3) Geliştirme sunucusu:
+```bash
+npm run dev
+```
+Uygulama genelde http://localhost:3000 (meşgul ise 3001) adresinde çalışır.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔐 Güvenlik Notları
+- `.env.local` dosyası `.gitignore` içinde; commit etmeyin.
+- Anahtarlarınızı sadece lokal `.env.local` veya dağıtım ortamı gizli değişkenlerinde tutun (GitHub/Vercel Secrets).
+- Bu repo sadece “Mekanlar: { "places": [...] }” satırını tüketir; istemciye anahtar sızdırılmaz.
 
-## Learn More
+## 🗺️ Mimari Kısa Özet
+- `src/app/api/plan/route.ts`: Gemini ile plan üretimi, en sonda “Mekanlar” JSON’unu parse eder.
+- `src/app/api/weather/route.ts`: Open‑Meteo geocode + forecast; current (yeni/legacy), daily ve seçili gün özetini döner.
+- `src/components/form-map-bridge.tsx`: Form + Harita + Hava durumu kompozisyonu.
+- `src/components/map.tsx`: Dinamik import ile Leaflet, ankora göre (cityHint) jeokodlama ve filtreleme.
+- `src/lib/types.ts`: Ortak tipler. `src/lib/weather-icons.tsx`: Hava durumu ikon eşlemeleri.
 
-To learn more about Next.js, take a look at the following resources:
+## 🧪 Hızlı Test
+1) Formdan bir şehir ve başlama tarihi seçin, plan oluşturun.
+2) Haritada şehir ve mekan işaretleri görünecek.
+3) Hava durumu kartında anlık sıcaklık, rüzgar ve ikon görünür.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📦 Deploy
+- Vercel önerilir. Projeyi bağlayın ve Environment Variables’a `GEMINI_API_KEY` ekleyin.
+- Next.js App Router, Node.js runtime (API Routes) ile uyumludur.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 Lisans
+MIT (isteğe bağlı — LICENSE dosyası ekleyebilirsiniz)
