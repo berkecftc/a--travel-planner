@@ -52,4 +52,4 @@ Uygulama genelde http://localhost:3000 (meşgul ise 3001) adresinde çalışır.
 - Next.js App Router, Node.js runtime (API Routes) ile uyumludur.
 
 ## 📝 Lisans
-MIT (isteğe bağlı — LICENSE dosyası ekleyebilirsiniz)
+MIT
